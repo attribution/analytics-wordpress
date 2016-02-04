@@ -28,10 +28,6 @@ class Attribution_Analytics {
 			self::$instance = new Attribution_Analytics;
 			self::$instance->setup_constants();
 
-			if ( ! has_action( 'plugins_loaded', array( self::$instance, 'include_deprecated_files' ) ) ) {
-				add_action( 'plugins_loaded', array( self::$instance, 'include_deprecated_files' ), 20 );
-			}
-
 		}
 
 		return self::$instance;
