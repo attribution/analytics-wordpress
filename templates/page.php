@@ -1,5 +1,5 @@
  <script type="text/javascript">
-  attribution.page(<?php echo '"' . esc_js( $category ) . '"' ?><?php if ( ! empty( $name ) ) echo ', "' . esc_js( $name ) . '"' ?><?php if ( ! empty( $properties ) ) { echo ', ' . json_encode( Attribution_Analytics_WordPress::esc_js_deep( $properties ) ); } else { echo ', {}'; } ?><?php if ( ! empty( $options ) ) { echo ', ' . json_encode( Attribution_Analytics_WordPress::esc_js_deep( $options ) ); } ?>);
+  Attribution.page(<?php echo '"' . esc_js( $category ) . '"' ?><?php if ( ! empty( $name ) ) echo ', "' . esc_js( $name ) . '"' ?><?php if ( ! empty( $properties ) ) { echo ', ' . json_encode( Attribution_Analytics_WordPress::esc_js_deep( $properties ) ); } else { echo ', {}'; } ?><?php if ( ! empty( $options ) ) { echo ', ' . json_encode( Attribution_Analytics_WordPress::esc_js_deep( $options ) ); } ?>);
  <?php
   	if ( $http_event ) :
   		?>

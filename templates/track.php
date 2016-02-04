@@ -1,10 +1,10 @@
  <script type="text/javascript">
-  attribution.track(<?php echo '"' . esc_js( $event ) . '"' ?><?php if ( ! empty( $properties ) ) { echo ', ' . json_encode( Attribution_Analytics_WordPress::esc_js_deep( $properties ) ); } else { echo ', {}'; } ?><?php if ( ! empty( $options ) ) { echo ', ' . json_encode( Attribution_Analytics_WordPress::esc_js_deep( $options ) ); } ?>);
+  Attribution.track(<?php echo '"' . esc_js( $event ) . '"' ?><?php if ( ! empty( $properties ) ) { echo ', ' . json_encode( Attribution_Analytics_WordPress::esc_js_deep( $properties ) ); } else { echo ', {}'; } ?><?php if ( ! empty( $options ) ) { echo ', ' . json_encode( Attribution_Analytics_WordPress::esc_js_deep( $options ) ); } ?>);
     <?php
   	if ( $http_event ) :
   		?>
 
-		attribution.ajaxurl = "<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>";
+		Attribution.ajaxurl = "<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>";
 
 		jQuery( document ).ready( function( $ ) {
 			var data = {
@@ -16,7 +16,7 @@
 				console.log( response );
 			};
 
-			$.post( attribution.ajaxurl, data, success );
+			$.post( Attribution.ajaxurl, data, success );
 		});
 
   		<?php
