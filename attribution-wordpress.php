@@ -210,27 +210,24 @@ class Attribution_Analytics_WordPress {
 
 		// Whether or not we should track events for posts. This also includes
 		// custom post types, for example a Product post type.
-		'track_posts'       => 1,
+		'track_posts'       => 0,
 
 		// Whether or not we should track events for pages. This includes the
 		// Home page and things like the About page, Contact page, etc.
-		'track_pages'       => 1,
+		'track_pages'       => 0,
 
 		// Whether or not we should track custom events for archive pages like
 		// the Category archive or the Author archive.
-		'track_archives'    => 1,
+		'track_archives'    => 0,
 
 		// Whether or not we should track custom events for comments
-		'track_comments'    => 1,
-
-		// Whether or not we should use Intercom's Secure Mode
-		'use_intercom_secure_mode'    => '',
+		'track_comments'    => 0,
 
 		// Whether or not we should track custom events for searches
-		'track_searches'    => 1,
+		'track_searches'    => 0,
 
 		// Whether or not we should track custom events for users logging in
-		'track_logins'      => 1,
+		'track_logins'      => 0,
 
 		// Whether or not we should track custom events for viewing the logged in page.
 		'track_login_page'  => false,
@@ -301,7 +298,6 @@ class Attribution_Analytics_WordPress {
 		include_once( ATTR_FILE_PATH . '/includes/class.attribution-settings.php' );
 		include_once( ATTR_FILE_PATH . '/includes/class.attribution-cookie.php' );
 		include_once( ATTR_FILE_PATH . '/integrations/ecommerce.php' );
-		include_once( ATTR_FILE_PATH . '/integrations/intercom.php' );
 
 		do_action( 'attribution_include_files', self::$instance );
 	}
@@ -396,11 +392,6 @@ class Attribution_Analytics_WordPress {
 							'name'            => 'track_searches',
 							'title'           => __( 'Track Searches', 'attribution' ),
 							'callback'        => array( 'Attribution_Settings', 'track_search_callback' ),
-						),
-						array(
-							'name'            => 'use_intercom_secure_mode',
-							'title'           => __( 'Intercom API Secret', 'attribution' ),
-							'callback'        => array( 'Attribution_Settings', 'use_intercom_secure_mode' ),
 						),
 					)
 				),

@@ -131,16 +131,6 @@ class Attribution_Settings {
 
 	}
 
-	public static function use_intercom_secure_mode() {
-
-		$settings = Attribution_Analytics_WordPress::get_instance()->get_settings();
-		$name     = Attribution_Analytics_WordPress::get_instance()->get_option_name() . '[use_intercom_secure_mode]';
-	?>
-			<input class="regular-text ltr" type="text" name="<?php echo esc_attr( $name ); ?>" id="use_intercom_secure_mode" value="<?php echo esc_attr( $settings['use_intercom_secure_mode'] ); ?>" />
-			<p class="description"><?php _e( 'Enter your Intercom API key here to use Secure Mode.  Your Intercom API key is found in Intercom’s secure mode setup guide.', 'attribution' ); ?></p>
-		<?php
-	}
-
 	public static function track_search_callback() {
 
 		$settings = Attribution_Analytics_WordPress::get_instance()->get_settings();
