@@ -1,15 +1,15 @@
 <?php
 
 /**
- * The Segment_Commerce abstract class is a handy, dandy abstract for eCommerce platforms to extend.
- * With a minimal amount of code, an eCommerce platform can hook into each of the registered events in Segment.
+ * The Attribution_Commerce abstract class is a handy, dandy abstract for eCommerce platforms to extend.
+ * With a minimal amount of code, an eCommerce platform can hook into each of the registered events in Attribution.
  * For examples, see the integrations in our /integrations/ecommerce folder.
  *
- * @package Segment
+ * @package Attribution
  * @since  1.0.0
  *
  */
-abstract class Segment_Commerce {
+abstract class Attribution_Commerce {
 
 	/**
 	 * An array of default registered events.
@@ -40,7 +40,7 @@ abstract class Segment_Commerce {
 	}
 
 	/**
-	 * Registers hooks for the Segment Commerce system.
+	 * Registers hooks for the Attribution Commerce system.
 	 *
 	 * Usable by plugins to register methods or functions to hook into different eCommerce events.
 	 * Someday, late static binding will be available to all WordPress users, which will make this a bit less hacky.
@@ -93,7 +93,7 @@ abstract class Segment_Commerce {
 	 * @return array Filtered events.
 	 */
 	public function get_registered_hooks() {
-		return apply_filters( 'segment_commerce_events', array_filter( $this->registered_events ), $this );
+		return apply_filters( 'attribution_commerce_events', array_filter( $this->registered_events ), $this );
 	}
 
 	/**
@@ -105,9 +105,9 @@ abstract class Segment_Commerce {
 	public static function bootstrap() {
 
 		if ( class_exists( 'WP_eCommerce' ) ) {
-			include_once SEG_FILE_PATH . '/integrations/ecommerce/wp-e-commerce.php';
+			include_once ATTR_FILE_PATH . '/integrations/ecommerce/wp-e-commerce.php';
 		} else if ( class_exists( 'WooCommerce' ) ) {
-			include_once SEG_FILE_PATH . '/integrations/ecommerce/woocommerce.php';
+			include_once ATTR_FILE_PATH . '/integrations/ecommerce/woocommerce.php';
 		}
 
 	}
@@ -154,4 +154,4 @@ abstract class Segment_Commerce {
 
 }
 
-Segment_Commerce::bootstrap();
+Attribution_Commerce::bootstrap();

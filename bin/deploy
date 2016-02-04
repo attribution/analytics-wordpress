@@ -6,7 +6,7 @@
 # Source: https://github.com/thenbrent/multisite-user-management/blob/master/deploy.sh
 
 # plugin slug
-PLUGINSLUG="analytics-wordpress"
+PLUGINSLUG="attribution-wordpress"
 
 # main config, set off of plugin slug
 CURRENTDIR=`pwd`
@@ -17,8 +17,8 @@ GITPATH="$CURRENTDIR" # this file should be in the base of your git repository
 
 # svn config
 SVNPATH="/tmp/$PLUGINSLUG" # path to a temp SVN repo. No trailing slash required and don't add trunk.
-SVNURL="http://plugins.svn.wordpress.org/segmentio/" # Remote SVN repo on WordPress.org, with no trailing slash
-SVNUSER="segmentio" # your svn username
+SVNURL="http://plugins.svn.wordpress.org/attribution/" # Remote SVN repo on WordPress.org, with no trailing slash
+SVNUSER="attribution" # your svn username
 
 # Let's begin...
 echo ".........................................."

@@ -1,38 +1,31 @@
 <?php
 /*
-Plugin Name: Analytics for WordPress — by Segment.io
-Plugin URI: https://segment.io/plugins/wordpress
-Description: The hassle-free way to integrate any analytics service into your WordPress site.
-Version: 1.0.12
-License: GPLv2
-Author: Segment.io
-Author URI: https://segment.io
-Author Email: friends@segment.io
+Plugin Name: Attribution for WordPress
 */
 
-class Segment_Analytics {
+class Attribution_Analytics {
 
 	/**
-	 * The singleton instance of Segment_Analytics.
+	 * The singleton instance of Attribution_Analytics.
 	 *
 	 * @access private
-	 * @var Segment_Analytics
+	 * @var Attribution_Analytics
 	 * @since 1.0.0
 	 */
 	private static $instance;
 
 	/**
-	 * Retrieves the one true instance of Segment_Analytics
+	 * Retrieves the one true instance of Attribution_Analytics
 	 * Also sets up constants and includes deprecated files.
 	 *
 	 * @since  1.0.0
-	 * @return object Singleton instance of Segment_Analytics
+	 * @return object Singleton instance of Attribution_Analytics
 	 */
 	public static function get_instance() {
 
 		if ( ! isset( self::$instance ) ) {
 
-			self::$instance = new Segment_Analytics;
+			self::$instance = new Attribution_Analytics;
 			self::$instance->setup_constants();
 
 			if ( ! has_action( 'plugins_loaded', array( self::$instance, 'include_deprecated_files' ) ) ) {
@@ -52,33 +45,19 @@ class Segment_Analytics {
 	public function setup_constants() {
 
 		// Set the core file path
-		define( 'SEG_FILE_PATH', dirname( __FILE__ ) );
+		define( 'ATTR_FILE_PATH', dirname( __FILE__ ) );
 
 		// Define the path to the plugin folder
-		define( 'SEG_DIR_NAME',  basename( SEG_FILE_PATH ) );
+		define( 'ATTR_DIR_NAME',  basename( ATTR_FILE_PATH ) );
 
 		// Define the URL to the plugin folder
-		define( 'SEG_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
-		define( 'SEG_URL'   , plugins_url( '', __FILE__ ) );
+		define( 'ATTR_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
+		define( 'ATTR_URL'   , plugins_url( '', __FILE__ ) );
 
 	}
 
 	/**
-	 * Includes deprecated files, specifically our old class names.
-	 * They simply extend their replacement classes and are only includes if other plugins do not define those classes.
-	 *
-	 * @since 1.0.0
-	 */
-	public function include_deprecated_files() {
-
-		// Include old files for back compat
-		include_once( SEG_FILE_PATH . '/includes/class.analytics.php' );
-		include_once( SEG_FILE_PATH . '/includes/class.analytics-wordpress.php' );
-
-	}
-
-	/**
-	 * Render the Segment.io Javascript snippet.
+	 * Render the Attribution Javascript snippet.
 	 *
 	 * @since  1.0.0
 	 *
@@ -91,7 +70,7 @@ class Segment_Analytics {
 			return;
 		}
 
-		include_once( SEG_FILE_PATH . '/templates/snippet.php' );
+		include_once( ATTR_FILE_PATH . '/templates/snippet.php' );
 
 	}
 
@@ -102,15 +81,15 @@ class Segment_Analytics {
 	 *
 	 * @param  int|string  $user_id Current User ID.
 	 *                              Generated via get_current_user_id() if logged in, anonymous user ID if not.
-	 * @param  array       $traits  Array of traits to pass to Segment.
-	 * @param  array       $options Array of options to pass to Segment.
+	 * @param  array       $traits  Array of traits to pass to Attribution.
+	 * @param  array       $options Array of options to pass to Attribution.
 	 */
 	public static function identify( $user_id, $traits = array(), $options = array() ) {
 
 		// Set the proper `library` option so we know where the API calls come from.
-		$options['library'] = 'analytics-wordpress';
+		$options['library'] = 'attribution-wordpress';
 
-		include_once( SEG_FILE_PATH. '/templates/identify.php' );
+		include_once( ATTR_FILE_PATH. '/templates/identify.php' );
 	}
 
 	/**
@@ -118,9 +97,9 @@ class Segment_Analytics {
 	 *
 	 * @since  1.0.0
 	 *
-	 * @param  string  $event       The name of the event to pass to Segment.
-	 * @param  array   $properties  An array of properties to pass to Segment.
-	 * @param  array   $options     An array of options to pass to Segment.
+	 * @param  string  $event       The name of the event to pass to Attribution.
+	 * @param  array   $properties  An array of properties to pass to Attribution.
+	 * @param  array   $options     An array of options to pass to Attribution.
 	 * @param  boolean $http_event  Whether or not the event is occurring over HTTP, as opposed to on page load.
 	 *                              This is helpful to track events that occur between page loads, like commenting.
 	 *
@@ -128,9 +107,9 @@ class Segment_Analytics {
 	public static function track( $event, $properties = array(), $options = array(), $http_event = false ) {
 
 		// Set the proper `library` option so we know where the API calls come from.
-		$options['library'] = 'analytics-wordpress';
+		$options['library'] = 'attribution-wordpress';
 
-		include_once( SEG_FILE_PATH . '/templates/track.php' );
+		include_once( ATTR_FILE_PATH . '/templates/track.php' );
 	}
 
 	/**
@@ -140,17 +119,17 @@ class Segment_Analytics {
 	 *
 	 * @param  string  $category    Category (or name) of event
 	 * @param  string  $name        Optional, but if set, category must be set as well.
-	 * @param  array   $properties  An array of properties to pass to Segment.
-	 * @param  array   $options     An array of options to pass to Segment.
+	 * @param  array   $properties  An array of properties to pass to Attribution.
+	 * @param  array   $options     An array of options to pass to Attribution.
 	 * @param  boolean $http_event  Whether or not the event is occurring over HTTP, as opposed to on page load.
 	 *                              This is helpful to track events that occur between page loads, like commenting.
 	 */
 	public static function page( $category = '', $name = '', $properties = array(), $options = array(), $http_event = false ) {
 
 		// Set the proper `library` option so we know where the API calls come from.
-		$options['library'] = 'analytics-wordpress';
+		$options['library'] = 'attribution-wordpress';
 
-		include_once( SEG_FILE_PATH . '/templates/page.php' );
+		include_once( ATTR_FILE_PATH . '/templates/page.php' );
 
 	}
 
@@ -162,21 +141,21 @@ class Segment_Analytics {
 	 *
 	 * @param  int|string $from    The anonymous ID that we're aliasing from.
 	 * @param  int|string $to      The newly created User ID we are aliasing to.
-	 * @param  string     $context Optional context parameter to be passed to Segment.
+	 * @param  string     $context Optional context parameter to be passed to Attribution.
 	 */
 	public static function alias( $from, $to, $context = '' ) {
 
-		include_once( SEG_FILE_PATH . '/templates/alias.php' );
+		include_once( ATTR_FILE_PATH . '/templates/alias.php' );
 	}
 
 }
 
-class Segment_Analytics_WordPress {
+class Attribution_Analytics_WordPress {
 
 	/**
 	 * Slug used in page and menu names
 	 */
-	const SLUG    = 'analytics';
+	const SLUG    = 'attribution';
 
 	/**
 	 * Current plugin version.
@@ -184,19 +163,19 @@ class Segment_Analytics_WordPress {
 	const VERSION = '1.0.12';
 
 	/**
-	 * The singleton instance of Segment_Analytics_WordPress.
+	 * The singleton instance of Attribution_Analytics_WordPress.
 	 *
 	 * @access private
-	 * @var Segment_Analytics_WordPress
+	 * @var Attribution_Analytics_WordPress
 	 * @since 1.0.0
 	 */
 	private static $instance;
 
 	/**
-	 * The singleton instance of Segment_Analytics, for use in our class.
+	 * The singleton instance of Attribution_Analytics, for use in our class.
 	 *
 	 * @access private
-	 * @var Segment_Analytics
+	 * @var Attribution_Analytics
 	 * @since 1.0.0
 	 */
 	private $analytics;
@@ -208,13 +187,13 @@ class Segment_Analytics_WordPress {
 	 * @var string
 	 * @since 1.0.0
 	 */
-	private $option   = 'analytics_wordpress_options';
+	private $option   = 'attribution_wordpress_options';
 
 	/**
 	 * The default values for our options array.
 	 *
 	 * Not used since 1.0.0, outside of activation hooks, with our move to the Settings API.
-	 * See Segment_Analytics_WordPress::register_settings().
+	 * See Attribution_Analytics_WordPress::register_settings().
 	 *
 	 * @access public
 	 * @var array
@@ -222,7 +201,7 @@ class Segment_Analytics_WordPress {
 	 */
 	public $defaults = array(
 
-		// Your Segment.io API key that we'll use to initialize analytics.js.
+		// Your Attribution API key that we'll use to initialize analytics.js.
 		'api_key'           => '',
 
 		// Whether or not we should ignore users of above a certain permissions
@@ -261,22 +240,22 @@ class Segment_Analytics_WordPress {
 	);
 
 	/**
-	 * Retrieves the one true instance of Segment_Analytics_WordPress
+	 * Retrieves the one true instance of Attribution_Analytics_WordPress
 	 *
 	 * @since  1.0.0
-	 * @return object Singleton instance of Segment_Analytics_WordPress
+	 * @return object Singleton instance of Attribution_Analytics_WordPress
 	 */
 	public static function get_instance() {
 
-		if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Segment_Analytics_WordPress ) ) {
+		if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Attribution_Analytics_WordPress ) ) {
 
-			self::$instance = new Segment_Analytics_WordPress;
+			self::$instance = new Attribution_Analytics_WordPress;
 
 			self::$instance->load_textdomain();
 			self::$instance->admin_hooks();
 			self::$instance->frontend_hooks();
 
-			self::$instance->analytics = Segment_Analytics::get_instance();
+			self::$instance->analytics = Attribution_Analytics::get_instance();
 
 			self::$instance->include_files();
 		}
@@ -309,7 +288,7 @@ class Segment_Analytics_WordPress {
 
 	/**
 	 * Includes core classes.
-	 * Currently includes Segment_Cookie and eCommerce bootstrap.
+	 * Currently includes Attribution_Cookie and eCommerce bootstrap.
 	 *
 	 * @uses  do_action() Allows other plugins to hook in before or after everything is bootstrapped.
 	 *
@@ -317,14 +296,14 @@ class Segment_Analytics_WordPress {
 	 */
 	public function include_files() {
 
-		do_action( 'segment_pre_include_files', self::$instance );
+		do_action( 'attribution_pre_include_files', self::$instance );
 
-		include_once( SEG_FILE_PATH . '/includes/class.segment-settings.php' );
-		include_once( SEG_FILE_PATH . '/includes/class.segment-cookie.php' );
-		include_once( SEG_FILE_PATH . '/integrations/ecommerce.php' );
-		include_once( SEG_FILE_PATH . '/integrations/intercom.php' );
+		include_once( ATTR_FILE_PATH . '/includes/class.attribution-settings.php' );
+		include_once( ATTR_FILE_PATH . '/includes/class.attribution-cookie.php' );
+		include_once( ATTR_FILE_PATH . '/integrations/ecommerce.php' );
+		include_once( ATTR_FILE_PATH . '/integrations/intercom.php' );
 
-		do_action( 'segment_include_files', self::$instance );
+		do_action( 'attribution_include_files', self::$instance );
 	}
 
 	/**
@@ -352,76 +331,76 @@ class Segment_Analytics_WordPress {
 	 * @since  1.0.4
 	 */
 	public function _get_default_settings() {
-		return apply_filters( 'segment_default_settings', array(
+		return apply_filters( 'attribution_default_settings', array(
 				'general' => array(
-					'title'    => __( 'General', 'segment' ),
-					'callback' => array( 'Segment_Settings', 'general_section_callback' ),
+					'title'    => __( 'General', 'attribution' ),
+					'callback' => array( 'Attribution_Settings', 'general_section_callback' ),
 					'fields'   => array(
 						array(
 							'name'            => 'api_key',
-							'title'           => __( 'Segment API Write Key', 'segment' ),
-							'callback'        => array( 'Segment_Settings', 'api_key_callback' ),
+							'title'           => __( 'Attribution API Write Key', 'attribution' ),
+							'callback'        => array( 'Attribution_Settings', 'api_key_callback' ),
 						)
 					)
 				),
 				'advanced' => array(
-					'title'    => __( 'Advanced Settings', 'segment' ),
-					'callback' => array( 'Segment_Settings', 'advanced_section_callback' ),
+					'title'    => __( 'Advanced Settings', 'attribution' ),
+					'callback' => array( 'Attribution_Settings', 'advanced_section_callback' ),
 					'fields'   => array(
 						array(
 							'name'            => 'ignore_user_level',
-							'title'           => __( 'Users to Ignore', 'segment' ),
-							'callback'        => array( 'Segment_Settings', 'ignore_user_level_callback' ),
+							'title'           => __( 'Users to Ignore', 'attribution' ),
+							'callback'        => array( 'Attribution_Settings', 'ignore_user_level_callback' ),
 						),
 						array(
 							'name'            => 'track_posts',
-							'title'           => __( 'Track Posts', 'segment' ),
-							'callback'        => array( 'Segment_Settings', 'track_posts_callback' ),
+							'title'           => __( 'Track Posts', 'attribution' ),
+							'callback'        => array( 'Attribution_Settings', 'track_posts_callback' ),
 						),
 						array(
 							'name'            => 'exclude_post_types',
-							'title'           => __( 'Exclude Post Types', 'segment' ),
-							'callback'        => array( 'Segment_Settings', 'exclude_custom_post_types' ),
+							'title'           => __( 'Exclude Post Types', 'attribution' ),
+							'callback'        => array( 'Attribution_Settings', 'exclude_custom_post_types' ),
 						),
 						array(
 							'name'            => 'track_pages',
-							'title'           => __( 'Track Pages', 'segment' ),
-							'callback'        => array( 'Segment_Settings', 'track_pages_callback' ),
+							'title'           => __( 'Track Pages', 'attribution' ),
+							'callback'        => array( 'Attribution_Settings', 'track_pages_callback' ),
 						),
 						array(
 							'name'            => 'track_archives',
-							'title'           => __( 'Track Archives', 'segment' ),
-							'callback'        => array( 'Segment_Settings', 'track_archives_callback' ),
+							'title'           => __( 'Track Archives', 'attribution' ),
+							'callback'        => array( 'Attribution_Settings', 'track_archives_callback' ),
 						),
 						array(
 							'name'            => 'track_archives',
-							'title'           => __( 'Track Archives', 'segment' ),
-							'callback'        => array( 'Segment_Settings', 'track_archives_callback' ),
+							'title'           => __( 'Track Archives', 'attribution' ),
+							'callback'        => array( 'Attribution_Settings', 'track_archives_callback' ),
 						),
 						array(
 							'name'            => 'track_comments',
-							'title'           => __( 'Track Comments', 'segment' ),
-							'callback'        => array( 'Segment_Settings', 'track_comments_callback' ),
+							'title'           => __( 'Track Comments', 'attribution' ),
+							'callback'        => array( 'Attribution_Settings', 'track_comments_callback' ),
 						),
 						array(
 							'name'            => 'track_logins',
-							'title'           => __( 'Track Logins', 'segment' ),
-							'callback'        => array( 'Segment_Settings', 'track_logins_callback' ),
+							'title'           => __( 'Track Logins', 'attribution' ),
+							'callback'        => array( 'Attribution_Settings', 'track_logins_callback' ),
 						),
 						array(
 							'name'            => 'track_login_page',
-							'title'           => __( 'Track Login Page Views', 'segment' ),
-							'callback'        => array( 'Segment_Settings', 'track_login_page_callback' ),
+							'title'           => __( 'Track Login Page Views', 'attribution' ),
+							'callback'        => array( 'Attribution_Settings', 'track_login_page_callback' ),
 						),
 						array(
 							'name'            => 'track_searches',
-							'title'           => __( 'Track Searches', 'segment' ),
-							'callback'        => array( 'Segment_Settings', 'track_search_callback' ),
+							'title'           => __( 'Track Searches', 'attribution' ),
+							'callback'        => array( 'Attribution_Settings', 'track_search_callback' ),
 						),
 						array(
 							'name'            => 'use_intercom_secure_mode',
-							'title'           => __( 'Intercom API Secret', 'segment' ),
-							'callback'        => array( 'Segment_Settings', 'use_intercom_secure_mode' ),
+							'title'           => __( 'Intercom API Secret', 'attribution' ),
+							'callback'        => array( 'Attribution_Settings', 'use_intercom_secure_mode' ),
 						),
 					)
 				),
@@ -433,8 +412,8 @@ class Segment_Analytics_WordPress {
 	/**
 	 * Registers our settings, fields and sections using the WordPress Settings API.
 	 *
-	 * Developers should use the `segment_default_settings` filter to add settings.
-	 * They should also use the `segment_settings_core_validation` filter to validate
+	 * Developers should use the `attribution_default_settings` filter to add settings.
+	 * They should also use the `attribution_settings_core_validation` filter to validate
 	 * any settings they add.
 	 *
 	 * @since  1.0.0
@@ -444,7 +423,7 @@ class Segment_Analytics_WordPress {
 
 		$settings = $this->_get_default_settings();
 
-	 	register_setting( self::SLUG, $this->get_option_name(), array( 'Segment_Settings', 'core_validation' ) );
+	 	register_setting( self::SLUG, $this->get_option_name(), array( 'Attribution_Settings', 'core_validation' ) );
 
 		foreach ( $settings as $section_name => $section ) {
 
@@ -485,26 +464,26 @@ class Segment_Analytics_WordPress {
 	 */
 	public function load_textdomain() {
 		// Set filter for plugin's languages directory
-		$segment_lang_dir = dirname( plugin_basename( __FILE__ ) ) . '/languages/';
-		$segment_lang_dir = apply_filters( 'segment_languages_directory', $segment_lang_dir );
+		$attribution_lang_dir = dirname( plugin_basename( __FILE__ ) ) . '/languages/';
+		$attribution_lang_dir = apply_filters( 'attribution_languages_directory', $attribution_lang_dir );
 
 		// Traditional WordPress plugin locale filter
-		$locale = apply_filters( 'plugin_locale',  get_locale(), 'segment' );
-		$mofile = sprintf( '%1$s-%2$s.mo', 'segment', $locale );
+		$locale = apply_filters( 'plugin_locale',  get_locale(), 'attribution' );
+		$mofile = sprintf( '%1$s-%2$s.mo', 'attribution', $locale );
 
 		// Setup paths to current locale file
-		$mofile_local  = $segment_lang_dir . $mofile;
-		$mofile_global = WP_LANG_DIR . '/segment/' . $mofile;
+		$mofile_local  = $attribution_lang_dir . $mofile;
+		$mofile_global = WP_LANG_DIR . '/attribution/' . $mofile;
 
 		if ( file_exists( $mofile_global ) ) {
-			// Look in global /wp-content/languages/segment folder
-			load_textdomain( 'segment', $mofile_global );
+			// Look in global /wp-content/languages/attribution folder
+			load_textdomain( 'attribution', $mofile_global );
 		} elseif ( file_exists( $mofile_local ) ) {
 			// Look in local /wp-content/plugins/analytics-wordpress/languages/ folder
-			load_textdomain( 'segment', $mofile_local );
+			load_textdomain( 'attribution', $mofile_local );
 		} else {
 			// Load the default language files
-			load_plugin_textdomain( 'segment', false, $segment_lang_dir );
+			load_plugin_textdomain( 'attribution', false, $attribution_lang_dir );
 		}
 	}
 
@@ -564,7 +543,7 @@ class Segment_Analytics_WordPress {
 	}
 
 	/**
-	 * Uses Segment_Cookie::set_cookie() to notify Segment that a comment has been left.
+	 * Uses Attribution_Cookie::set_cookie() to notify Attribution that a comment has been left.
 	 *
 	 * @param  int    $id      Comment ID. Unused.
 	 * @param  object $comment WP_Comment object Unused.
@@ -573,11 +552,11 @@ class Segment_Analytics_WordPress {
 	 */
 	public function insert_comment( $id, $comment ) {
 
-		Segment_Cookie::set_cookie( 'left_comment', md5( json_encode( wp_get_current_commenter() ) ) );
+		Attribution_Cookie::set_cookie( 'left_comment', md5( json_encode( wp_get_current_commenter() ) ) );
 	}
 
 	/**
-	 * Uses Segment_Cookie::set_cookie() to notify Segment that a user has logged in.
+	 * Uses Attribution_Cookie::set_cookie() to notify Attribution that a user has logged in.
 	 *
 	 * @since  1.0.0
 	 *
@@ -587,11 +566,11 @@ class Segment_Analytics_WordPress {
 	 */
 	public function login_event( $login, $user ) {
 
-		Segment_Cookie::set_cookie( 'logged_in', md5( json_encode( $user ) ) );
+		Attribution_Cookie::set_cookie( 'logged_in', md5( json_encode( $user ) ) );
 	}
 
 	/**
-	 * Uses Segment_Cookie::set_cookie() to notify Segment that a user has signed up.
+	 * Uses Attribution_Cookie::set_cookie() to notify Attribution that a user has signed up.
 	 *
 	 * @since  1.0.0
 	 *
@@ -600,7 +579,7 @@ class Segment_Analytics_WordPress {
 	 */
 	public function user_register( $user_id ) {
 
-		Segment_Cookie::set_cookie( 'signed_up', json_encode( $user_id ) );
+		Attribution_Cookie::set_cookie( 'signed_up', json_encode( $user_id ) );
 	}
 
 	/**
@@ -649,7 +628,7 @@ class Segment_Analytics_WordPress {
 
 		// Add a settings and docs link to the end of the row of links row of links.
 		$settings_link = sprintf( '<a href="options-general.php?page=' . self::SLUG . '">%s</a>', __( 'Settings' ) );
-		$docs_link     = sprintf( '<a href="https://segment.io/plugins/wordpress" target="_blank">%s</a>', __( 'Docs', 'segment' ) );
+		$docs_link     = sprintf( '<a href="https://attribution.readme.io/docs/wordpress" target="_blank">%s</a>', __( 'Docs', 'attribution' ) );
 
 		array_push( $plugin_meta, $settings_link, $docs_link );
 
@@ -664,9 +643,9 @@ class Segment_Analytics_WordPress {
 	public function admin_menu() {
 
 		add_options_page(
-			apply_filters( 'segment_admin_menu_page_title', __( 'Analytics', 'segment' ) ), // Page Title
-			apply_filters( 'segment_admin_menu_menu_title', __( 'Analytics', 'segment' ) ), // Menu Title
-			apply_filters( 'segment_admin_settings_capability', 'manage_options' ),  // Capability Required
+			apply_filters( 'attribution_admin_menu_page_title', __( 'Analytics', 'attribution' ) ), // Page Title
+			apply_filters( 'attribution_admin_menu_menu_title', __( 'Analytics', 'attribution' ) ), // Menu Title
+			apply_filters( 'attribution_admin_settings_capability', 'manage_options' ),  // Capability Required
 			self::SLUG,                                                              // Menu Slug
 			array( $this, 'admin_page' )                                             // Function
 		);
@@ -682,10 +661,10 @@ class Segment_Analytics_WordPress {
 
 		// Make sure the user has the required permissions to view the settings.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'Sorry, you don\'t have the permissions to access this page.', 'segment' ) );
+			wp_die( __( 'Sorry, you don\'t have the permissions to access this page.', 'attribution' ) );
 		}
 
-		include_once( SEG_FILE_PATH . '/templates/settings.php');
+		include_once( ATTR_FILE_PATH . '/templates/settings.php');
 	}
 
 	/**
@@ -693,12 +672,12 @@ class Segment_Analytics_WordPress {
 	 *
 	 * @since  1.0.0
 	 *
-	 * @uses apply_filters() Applies 'segment_get_settings' filter to allow other developers to override.
+	 * @uses apply_filters() Applies 'attribution_get_settings' filter to allow other developers to override.
 	 *
 	 * @return array Array of settings.
 	 */
 	public function get_settings() {
-		return apply_filters( 'segment_get_settings', get_option( $this->option ), $this );
+		return apply_filters( 'attribution_get_settings', get_option( $this->option ), $this );
 	}
 
 	/**
@@ -707,7 +686,7 @@ class Segment_Analytics_WordPress {
 	 * @since  1.0.0
 	 *
 	 * @param  array $settings Array of settings
-	 * @uses   apply_filters() Applies 'segment_get_settings' filter to allow other developers to override.
+	 * @uses   apply_filters() Applies 'attribution_get_settings' filter to allow other developers to override.
 	 *
 	 * @deprecated Deprecated in 1.0.0
 	 *
@@ -771,7 +750,7 @@ class Segment_Analytics_WordPress {
 		 *
 		 * @since 1.0.0
 		 */
-		return apply_filters( 'segment_get_current_user_identify', $identify, $settings, $this );
+		return apply_filters( 'attribution_get_current_user_identify', $identify, $settings, $this );
 	}
 
 	/**
@@ -792,10 +771,10 @@ class Segment_Analytics_WordPress {
 			$user = wp_get_current_user();
 			$hash = md5( json_encode( $user ) );
 
-			if ( Segment_Cookie::get_cookie( 'logged_in', $hash ) ) {
+			if ( Attribution_Cookie::get_cookie( 'logged_in', $hash ) ) {
 
 				$track = array(
-					'event'      => __( 'Logged In', 'segment' ),
+					'event'      => __( 'Logged In', 'attribution' ),
 					'properties' => array(
 						'username'  => $user->user_login,
 						'email'     => $user->user_email,
@@ -822,7 +801,7 @@ class Segment_Analytics_WordPress {
 				if ( ! self::is_excluded_post_type() ) {
 					$categories = implode( ', ', wp_list_pluck( get_the_category( get_the_ID() ), 'name' ) );
 					$track = array(
-						'event'      => sprintf( __( 'Viewed %s', 'segment' ), ucfirst( get_post_type() ) ),
+						'event'      => sprintf( __( 'Viewed %s', 'attribution' ), ucfirst( get_post_type() ) ),
 						'properties' => array(
 							'title'      => single_post_title( '', false ),
 							'category'   => $categories
@@ -841,13 +820,13 @@ class Segment_Analytics_WordPress {
 			// that's why we don't use it.
 			if ( is_front_page() ) {
 				$track = array(
-					'event' => __( 'Viewed Home Page', 'segment' )
+					'event' => __( 'Viewed Home Page', 'attribution' )
 				);
 			}
 			// A normal WordPress page.
 			else if ( is_page() ) {
 				$track = array(
-					'event' => sprintf( __( 'Viewed %s Page', 'segment' ), single_post_title( '', false ) ),
+					'event' => sprintf( __( 'Viewed %s Page', 'attribution' ), single_post_title( '', false ) ),
 				);
 			}
 		}
@@ -861,7 +840,7 @@ class Segment_Analytics_WordPress {
 			if ( is_author() ) {
 			$author = get_queried_object();
 			$track  = array(
-				'event'      => __( 'Viewed Author Page', 'segment' ),
+				'event'      => __( 'Viewed Author Page', 'attribution' ),
 				'properties' => array(
 					'author' => $author->display_name
 					)
@@ -871,7 +850,7 @@ class Segment_Analytics_WordPress {
 			// http://codex.wordpress.org/Function_Reference/single_tag_title
 			else if ( is_tag() ) {
 				$track = array(
-				'event'      => __( 'Viewed Tag Page', 'segment' ),
+				'event'      => __( 'Viewed Tag Page', 'attribution' ),
 				'properties' => array(
 					'	tag' => single_tag_title( '', false )
 					)
@@ -881,7 +860,7 @@ class Segment_Analytics_WordPress {
 			// http://codex.wordpress.org/Function_Reference/single_cat_title
 			else if ( is_category() ) {
 				$track = array(
-				'event'      => __( 'Viewed Category Page', 'segment' ),
+				'event'      => __( 'Viewed Category Page', 'attribution' ),
 				'properties' => array(
 						'category' => single_cat_title( '', false )
 					)
@@ -898,10 +877,10 @@ class Segment_Analytics_WordPress {
 			if ( $commenter ) {
 				$hash = md5( json_encode( $commenter ) );
 
-				if ( Segment_Cookie::get_cookie( 'left_comment', $hash ) ) {
+				if ( Attribution_Cookie::get_cookie( 'left_comment', $hash ) ) {
 
 					$track = array(
-						'event'      => __( 'Commented', 'segment' ),
+						'event'      => __( 'Commented', 'attribution' ),
 						'properties' => array(
 							'commenter' => $commenter
 						),
@@ -919,7 +898,7 @@ class Segment_Analytics_WordPress {
 			if ( did_action( 'login_init' ) ) {
 
 				$track = array(
-					'event'      => __( 'Viewed Login Page', 'segment' )
+					'event'      => __( 'Viewed Login Page', 'attribution' )
 				);
 
 			}
@@ -932,7 +911,7 @@ class Segment_Analytics_WordPress {
 			// The search page.
 			if ( is_search() ) {
 				$track = array(
-					'event'      => __( 'Viewed Search Page', 'segment' ),
+					'event'      => __( 'Viewed Search Page', 'attribution' ),
 					'properties' => array(
 						'query' => get_query_var( 's' )
 					)
@@ -940,15 +919,15 @@ class Segment_Analytics_WordPress {
 			}
 		}
 
-		if ( Segment_Cookie::get_cookie( 'signed_up' ) ) {
+		if ( Attribution_Cookie::get_cookie( 'signed_up' ) ) {
 
-			$user_id = json_decode( Segment_Cookie::get_cookie( 'signed_up' ) );
+			$user_id = json_decode( Attribution_Cookie::get_cookie( 'signed_up' ) );
 			$user    = get_user_by( 'id', $user_id );
 
-			add_filter( 'segment_get_current_user_identify', array( self::$instance, 'new_user_identify' ) );
+			add_filter( 'attribution_get_current_user_identify', array( self::$instance, 'new_user_identify' ) );
 
 			$track = array(
-				'event'      => __( 'User Signed Up', 'segment' ),
+				'event'      => __( 'User Signed Up', 'attribution' ),
 				'properties' => array(
 					'username'  => $user->user_login,
 					'email'     => $user->user_email,
@@ -976,7 +955,7 @@ class Segment_Analytics_WordPress {
 			$track['properties'] = array_filter( $track['properties'] );
 		}
 
-		return apply_filters( 'segment_get_current_page_track', $track, $settings, $this );
+		return apply_filters( 'attribution_get_current_page_track', $track, $settings, $this );
 	}
 
 	/**
@@ -990,9 +969,9 @@ class Segment_Analytics_WordPress {
 	 */
 	public function new_user_identify( $identify ) {
 
-		if ( Segment_Cookie::get_cookie( 'signed_up' ) ) {
+		if ( Attribution_Cookie::get_cookie( 'signed_up' ) ) {
 
-			$user_id = json_decode( Segment_Cookie::get_cookie( 'signed_up' ) );
+			$user_id = json_decode( Attribution_Cookie::get_cookie( 'signed_up' ) );
 			$user    = get_user_by( 'id', $user_id );
 
 			$identify = array(
@@ -1021,7 +1000,7 @@ class Segment_Analytics_WordPress {
 	 */
 	private function get_current_page() {
 
-		$page = apply_filters( 'segment_get_current_page', false, $this->get_settings(), $this );
+		$page = apply_filters( 'attribution_get_current_page', false, $this->get_settings(), $this );
 
 		if ( $page ) {
 			$page['properties'] = is_array( $page['properties'] ) ? $page['properties'] : array();
@@ -1059,13 +1038,13 @@ class Segment_Analytics_WordPress {
 	 */
 	public static function setup_settings() {
 
-		$settings = get_option( Segment_Analytics_WordPress::get_instance()->get_option_name() );
+		$settings = get_option( Attribution_Analytics_WordPress::get_instance()->get_option_name() );
 
 		if ( ! empty( $settings ) ) {
 			return;
 		}
 
-		update_option( Segment_Analytics_WordPress::get_instance()->get_option_name(), Segment_Analytics_WordPress::get_instance()->defaults );
+		update_option( Attribution_Analytics_WordPress::get_instance()->get_option_name(), Attribution_Analytics_WordPress::get_instance()->defaults );
 	}
 
 	/**
@@ -1109,5 +1088,5 @@ class Segment_Analytics_WordPress {
 
 }
 
-register_activation_hook( __FILE__, array( 'Segment_Analytics_WordPress', 'setup_settings' ) );
-add_action( 'plugins_loaded', 'Segment_Analytics_WordPress::get_instance' );
+register_activation_hook( __FILE__, array( 'Attribution_Analytics_WordPress', 'setup_settings' ) );
+add_action( 'plugins_loaded', 'Attribution_Analytics_WordPress::get_instance' );

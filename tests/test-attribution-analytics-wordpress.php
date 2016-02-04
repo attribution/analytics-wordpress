@@ -1,11 +1,11 @@
 <?php
 
-class Segment_Analytics_WordPress_Test extends WP_UnitTestCase {
+class Attribution_Analytics_WordPress_Test extends WP_UnitTestCase {
 	protected $object;
 
 	public function setUp() {
 		parent::setUp();
-		$this->object = Segment_Analytics_WordPress::get_instance();
+		$this->object = Attribution_Analytics_WordPress::get_instance();
 	}
 
 	public function tearDown() {
@@ -13,15 +13,14 @@ class Segment_Analytics_WordPress_Test extends WP_UnitTestCase {
 		wp_set_current_user( 0 );
 	}
 
-	public function test_segment_instance() {
-		$this->assertClassHasStaticAttribute( 'instance', 'Segment_Analytics_WordPress' );
+	public function test_attribution_instance() {
+		$this->assertClassHasStaticAttribute( 'instance', 'Attribution_Analytics_WordPress' );
 	}
 
 	public function test_includes() {
-		$this->assertFileExists( SEG_FILE_PATH . '/includes/class.segment-settings.php' );
-		$this->assertFileExists( SEG_FILE_PATH . '/includes/class.segment-cookie.php' );
-		$this->assertFileExists( SEG_FILE_PATH . '/integrations/ecommerce.php' );
-		$this->assertFileExists( SEG_FILE_PATH . '/integrations/intercom.php' );
+		$this->assertFileExists( ATTR_FILE_PATH . '/includes/class.attribution-settings.php' );
+		$this->assertFileExists( ATTR_FILE_PATH . '/includes/class.attribution-cookie.php' );
+		$this->assertFileExists( ATTR_FILE_PATH . '/integrations/ecommerce.php' );
 	}
 
 	public function test_admin_actions() {
@@ -117,7 +116,7 @@ class Segment_Analytics_WordPress_Test extends WP_UnitTestCase {
 
 	public function test_register_settings_remove_default_settings() {
 
-		add_filter( 'segment_default_settings', function( $settings ) {
+		add_filter( 'attribution_default_settings', function( $settings ) {
 			unset( $settings['general'] );
 
 			return $settings;
@@ -128,7 +127,7 @@ class Segment_Analytics_WordPress_Test extends WP_UnitTestCase {
 
 	public function test_register_settings_add_default_settings() {
 
-		add_filter( 'segment_default_settings', function( $settings ) {
+		add_filter( 'attribution_default_settings', function( $settings ) {
 
 			$settings['third-party'] = array(
 				'title'    => '',

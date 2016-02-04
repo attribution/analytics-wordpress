@@ -1,14 +1,14 @@
 <?php
 
-class Segment_Commerce_WPSC extends Segment_Commerce {
+class Attribution_Commerce_WPSC extends Attribution_Commerce {
 
 	/**
 	 * Init method registers two types of hooks: Standard hooks, and those fired in-between page loads.
 	 *
-	 * For all our events, we hook into either `segment_get_current_page` or `segment_get_current_page_track`
+	 * For all our events, we hook into either `attribution_get_current_page` or `attribution_get_current_page_track`
 	 * depending on the API we want to use.
 	 *
-	 * For events that occur between page loads, we hook into the appropriate action and set a Segment_Cookie
+	 * For events that occur between page loads, we hook into the appropriate action and set a Attribution_Cookie
 	 * instance to check on the next page load.
 	 *
 	 * @access public
@@ -17,11 +17,11 @@ class Segment_Commerce_WPSC extends Segment_Commerce {
 	 */
 	public function init() {
 
-		$this->register_hook( 'segment_get_current_page'      , 'viewed_category'  , 1, $this );
-		$this->register_hook( 'segment_get_current_page_track', 'viewed_product'   , 1, $this );
-		$this->register_hook( 'segment_get_current_page_track', 'completed_order'  , 1, $this );
-		$this->register_hook( 'segment_get_current_page_track', 'added_to_cart'    , 2, $this );
-		$this->register_hook( 'segment_get_current_page_track', 'removed_from_cart', 2, $this );
+		$this->register_hook( 'attribution_get_current_page'      , 'viewed_category'  , 1, $this );
+		$this->register_hook( 'attribution_get_current_page_track', 'viewed_product'   , 1, $this );
+		$this->register_hook( 'attribution_get_current_page_track', 'completed_order'  , 1, $this );
+		$this->register_hook( 'attribution_get_current_page_track', 'added_to_cart'    , 2, $this );
+		$this->register_hook( 'attribution_get_current_page_track', 'removed_from_cart', 2, $this );
 
 		/* HTTP actions */
 		add_action( 'wpsc_add_to_cart', array( $this, 'add_to_cart' ), 10, 2 );
@@ -57,7 +57,7 @@ class Segment_Commerce_WPSC extends Segment_Commerce {
 		return $page;
 	}
 	/**
-	 * Adds product information to a Segment_Cookie when item is added to cart.
+	 * Adds product information to a Attribution_Cookie when item is added to cart.
 	 *
 	 * @param string $key      Key name for item in cart.  A hash.
 	 * @param int    $id       Product ID
@@ -87,7 +87,7 @@ class Segment_Commerce_WPSC extends Segment_Commerce {
 
 		if ( is_singular( 'wpsc-product' ) ) {
 				$track = array(
-					'event'      => __( 'Viewed Product', 'segment' ),
+					'event'      => __( 'Viewed Product', 'attribution' ),
 					'properties' => array(
 						'id'       => get_the_ID(),
 						'sku'      => wpsc_product_sku(),
@@ -102,7 +102,7 @@ class Segment_Commerce_WPSC extends Segment_Commerce {
 	}
 
 	/**
-	 * Adds product information to a Segment_Cookie when item is added to cart.
+	 * Adds product information to a Attribution_Cookie when item is added to cart.
 	 *
 	 * @param string $key      Key name for item in cart.  A hash.
 	 * @param int    $id       Product ID
@@ -116,7 +116,7 @@ class Segment_Commerce_WPSC extends Segment_Commerce {
 	 */
 	public function add_to_cart( $product, $cart_item ) {
 
-		Segment_Cookie::set_cookie( 'added_to_cart', json_encode(
+		Attribution_Cookie::set_cookie( 'added_to_cart', json_encode(
 				array(
 					'ID'       => $product->ID,
 					'quantity' => $cart_item->quantity,
@@ -143,7 +143,7 @@ class Segment_Commerce_WPSC extends Segment_Commerce {
 
 		$track = $args[0];
 
-		if ( false !== ( $product = Segment_Cookie::get_cookie( 'added_to_cart' ) ) ) {
+		if ( false !== ( $product = Attribution_Cookie::get_cookie( 'added_to_cart' ) ) ) {
 
 			$product = json_decode( $product );
 
@@ -157,7 +157,7 @@ class Segment_Commerce_WPSC extends Segment_Commerce {
 			);
 
 			$track = array(
-				'event'      => __( 'Added Product', 'segment' ),
+				'event'      => __( 'Added Product', 'attribution' ),
 				'properties' => $item,
 				'http_event' => 'added_to_cart'
 			);
@@ -168,7 +168,7 @@ class Segment_Commerce_WPSC extends Segment_Commerce {
 	}
 
 	/**
-	 * Adds product information to a Segment_Cookie when item is removed from cart.
+	 * Adds product information to a Attribution_Cookie when item is removed from cart.
 	 *
 	 * @param string $key      Key name for item in cart.  A hash.
 	 *
@@ -180,7 +180,7 @@ class Segment_Commerce_WPSC extends Segment_Commerce {
 	 */
 	public function remove_from_cart( $cart_item ) {
 		if ( 0 == $cart_item->quantity ) {
-			Segment_Cookie::set_cookie( 'removed_from_cart', json_encode(
+			Attribution_Cookie::set_cookie( 'removed_from_cart', json_encode(
 					array(
 						'ID'       => $cart_item->product_id,
 						'quantity' => 0,
@@ -209,7 +209,7 @@ class Segment_Commerce_WPSC extends Segment_Commerce {
 
 		$track = $args[0];
 
-		if ( false !== ( $product = Segment_Cookie::get_cookie( 'removed_from_cart' ) ) ) {
+		if ( false !== ( $product = Attribution_Cookie::get_cookie( 'removed_from_cart' ) ) ) {
 
 			$product = json_decode( $product );
 
@@ -223,7 +223,7 @@ class Segment_Commerce_WPSC extends Segment_Commerce {
 			);
 
 			$track = array(
-				'event'      => __( 'Removed Product', 'segment' ),
+				'event'      => __( 'Removed Product', 'attribution' ),
 				'properties' => $item,
 				'http_event' => 'removed_from_cart'
 			);
@@ -275,7 +275,7 @@ class Segment_Commerce_WPSC extends Segment_Commerce {
 				}
 
 				$track = array(
-					'event'      => __( 'Completed Order', 'segment' ),
+					'event'      => __( 'Completed Order', 'attribution' ),
 					'properties' => array(
 						'id'       => $log->get( 'id' )        ,
 						'total'    => $log->get( 'totalprice' ),
@@ -294,15 +294,15 @@ class Segment_Commerce_WPSC extends Segment_Commerce {
 
 }
 /**
- * Bootstrapper for the Segment_Commerce_WPSC class.
+ * Bootstrapper for the Attribution_Commerce_WPSC class.
  *
  * @since  1.0.0
  */
 
-function segment_commerce_wpsc() {
-	$commerce = new Segment_Commerce_WPSC();
+function attribution_commerce_wpsc() {
+	$commerce = new Attribution_Commerce_WPSC();
 
 	return $commerce->init();
 }
 
-add_action( 'plugins_loaded', 'segment_commerce_wpsc', 100 );
+add_action( 'plugins_loaded', 'attribution_commerce_wpsc', 100 );

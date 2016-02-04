@@ -1,5 +1,5 @@
 <?php
-class Segment_Settings_Test extends WP_UnitTestCase {
+class Attribution_Settings_Test extends WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
@@ -30,7 +30,7 @@ class Segment_Settings_Test extends WP_UnitTestCase {
 			'track_searches'   => '0',
 		);
 
-		$output = Segment_Settings::core_validation( $input );
+		$output = Attribution_Settings::core_validation( $input );
 
 		foreach ( $output as $name => $value ) {
 			if ( isset( $expected[ $name ] ) ) {
@@ -55,7 +55,7 @@ class Segment_Settings_Test extends WP_UnitTestCase {
 			'use_intercom_secure_mode' => 'yetanotherapikey'
 		);
 
-		$output = Segment_Settings::core_validation( $input );
+		$output = Attribution_Settings::core_validation( $input );
 
 		foreach ( $output as $name => $value ) {
 			if ( isset( $expected[ $name ] ) ) {
@@ -77,7 +77,7 @@ class Segment_Settings_Test extends WP_UnitTestCase {
 			'ignore_user_level' => 1
 		);
 
-		$output = Segment_Settings::core_validation( $input );
+		$output = Attribution_Settings::core_validation( $input );
 
 		foreach ( $output as $name => $value ) {
 			if ( isset( $expected[ $name ] ) ) {
@@ -92,7 +92,7 @@ class Segment_Settings_Test extends WP_UnitTestCase {
 
 	public function test_core_validation_filter() {
 
-		add_filter( 'segment_settings_core_validation', function( $input ) {
+		add_filter( 'attribution_settings_core_validation', function( $input ) {
 
 			if ( isset( $input['custom_input_validation'] ) ) {
 
@@ -111,7 +111,7 @@ class Segment_Settings_Test extends WP_UnitTestCase {
 			'custom_input_validation' => "Everything is awesome! Everythng is cool when you're part of a team."
 		);
 
-		$output = Segment_Settings::core_validation( $input );
+		$output = Attribution_Settings::core_validation( $input );
 
 		foreach ( $output as $name => $value ) {
 			if ( isset( $expected[ $name ] ) ) {
