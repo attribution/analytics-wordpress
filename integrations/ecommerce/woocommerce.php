@@ -23,6 +23,8 @@ class Attribution_Commerce_Woo extends Attribution_Commerce {
 		$this->register_hook( 'attribution_get_current_page_track', 'added_to_cart'    , 2, $this );
 		$this->register_hook( 'attribution_get_current_page_track', 'removed_from_cart', 2, $this );
 
+                $this->register_hook( 'attribution_get_current_user_identify', 'identify_completed_order', 1, $this );
+
 		/* HTTP actions */
 		add_action( 'woocommerce_add_to_cart'                   , array( $this, 'add_to_cart' )     , 10, 3 );
 		add_action( 'woocommerce_before_cart_item_quantity_zero', array( $this, 'remove_from_cart' ), 10 );
@@ -317,6 +319,52 @@ class Attribution_Commerce_Woo extends Attribution_Commerce {
 					)
 				);
 
+                                $identify = array(
+                                  'user_id' => $order->billing_email,
+                                  'traits' => array(
+                                        'email'     => $order->billing_email,
+					'firstName' => $order->billing_first_name,
+					'lastName'  => $order->billing_last_name
+                                      )
+                                )
+
+			}
+		}
+
+		return $track;
+	}
+
+	/**
+	 * Adds product properties to analytics.identify() when the order is completed successfully.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 *
+	 * @uses  func_get_args() Because our abstract class doesn't know how many parameters are passed to each hook
+	 *                        for each different platform, we use func_get_args().
+	 *
+	 * @return array Filtered array of name and properties for analytics.identify().
+	 */
+	public function identify_completed_order() {
+		$args  = func_get_args();
+		$track = $args[0];
+
+		if ( did_action( 'woocommerce_thankyou' ) ) {
+
+			$order_number = get_query_var( 'order-received' );
+
+			$order = new WC_Order( $order_number );
+
+			/* Because gateways vary wildly in their usage of the status concept, we check for failure rather than success. */
+			if ( 'failed' !== $order->status && $identify === false) {
+                              $identify = array(
+                                  'user_id' => $order->billing_email,
+                                  'traits' => array(
+                                        'email'     => $order->billing_email,
+                                        'firstName' => $order->billing_first_name,
+                                        'lastName'  => $order->billing_last_name
+                                  )
+                              )
 			}
 		}
 

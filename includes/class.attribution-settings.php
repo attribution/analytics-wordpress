@@ -4,7 +4,7 @@ class Attribution_Settings {
 
 	public static function general_section_callback() {
 		?>
-		<p style="max-width: 49em"><?php _e( 'Once you&rsquo;ve saved your API key, you can swap and add integrations right from the Attribution.io interface. Any integrations you turn on will be live within 10 minutes. No more touching any code!', 'attribution' ); ?></p>
+		<p style="max-width: 49em"><?php _e( 'Once you&rsquo;ve saved your API key, you can swap and add integrations right from the attributionapp.com interface. Any integrations you turn on will be live within 10 minutes. No more touching any code!', 'attribution' ); ?></p>
 		<?php
 	}
 
@@ -20,7 +20,7 @@ class Attribution_Settings {
 		$name     = Attribution_Analytics_WordPress::get_instance()->get_option_name() . '[api_key]';
 	?>
 			<input class="regular-text ltr" type="text" name="<?php echo esc_attr( $name ); ?>" id="api_key" value="<?php echo esc_attr( $settings['api_key'] ); ?>" />
-			<p class="description"><?php _e( 'You can find your API Write Key in Project Settings > API Keys in your Attribution.io Dashboard.', 'attribution' ); ?></p>
+			<p class="description"><?php _e( 'You can find your API Write Key in Project Settings > API Keys in your attributionapp.com Dashboard.', 'attribution' ); ?></p>
 		<?php
 
 	}
