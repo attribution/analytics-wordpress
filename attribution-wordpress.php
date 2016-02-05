@@ -330,7 +330,7 @@ class Attribution_Analytics_WordPress {
 					'fields'   => array(
 						array(
 							'name'            => 'api_key',
-							'title'           => __( 'Attribution API Write Key', 'attribution' ),
+							'title'           => __( 'Attribution Project ID', 'attribution' ),
 							'callback'        => array( 'Attribution_Settings', 'api_key_callback' ),
 						)
 					)

@@ -1,7 +1,7 @@
 
-# Analytics for WordPress
+# Attribution for WordPress
 
-**Analytics for WordPress** is a WordPress plugin for [Attribution](https://attributionapp.com) that lets you send data to any analytics service you want without touching any code.
+**Attribution for WordPress** is a WordPress plugin for [Attribution](https://attributionapp.com).
 
 
 
