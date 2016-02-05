@@ -1,30 +1,24 @@
-=== Analytics for WordPress — by Attribution ===
+=== Attribution for WordPress ===
+Tags: analytics, attribution, attributionapp
+Requires at least: 3.6
+Tested up to: 4.0
+Stable tag: 1.0.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Analytics for WordPress lets you integrate more than 100 analytics and marketing tools with the flick of a switch.
-
-
 == Description ==
 
-Analytics for WordPress is the easiest way to integrate analytics and marketing tools into your WordPress site.
-
-Instead of installing each tool individually, just install Attribution's WordPress plugin and use Attribution to integrate third-party analytics and marketing tools.   Once you're setup, you can swap and add new analytics services with the flick of a switch!
+Attribution for WordPress lets you easily track advertising spend, revenue and conversions across all of your marketing channels.
 
 Here's how it works:
-* Install the Attribution plugin
-* Attribution will automatically start tracking how people are using your site – what pages they view and the information they provide to you, like their emails
-* Go to the Attribution control panel, and toggle on any tool you want to try like Google Analytics, KISSmetrics and Facebook Audiences
-* Attribution will send this data along to each tool
-* The service is fully integrated into your site–zero code required!
-
-Get started with Analytics for WordPress today!
+* Install the Attribution plugin.
+* It sends user page views, user traits and revenue events to Attribution.
+* In Attribution, you can hook up your Facebook and Adwords accounts.
+* It tells you which campaigns and channels are bringing in the most customers.
 
 == Installation ==
 
 1. Go to the **Plugins > Add New** page in your WordPress admin.
 1. Search for "Attribution" and install **Attribution for WordPress**.
 1. Click **Activate Plugin**.
-1. Go to **Settings > Analytics** and enter your Attribution API key. (If you haven't signed up for Attribution yet, now's the time!)
-
-That's it! You can now turn on any analytics service with the flick of a switch in the Attribution control panel.
+1. Go to **Settings > Attribution** and enter your Attribution Project ID.
