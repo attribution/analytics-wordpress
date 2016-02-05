@@ -33,7 +33,8 @@ abstract class Attribution_Commerce {
 			'viewed_product',
 			'added_to_cart',
 			'removed_from_cart',
-			'completed_order',
+                        'completed_order',
+                        'identify_completed_order',
 		);
 
 		return $this;

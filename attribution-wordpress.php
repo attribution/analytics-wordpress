@@ -197,7 +197,7 @@ class Attribution_Analytics_WordPress {
 	 */
 	public $defaults = array(
 
-		// Your Attribution API key that we'll use to initialize analytics.js.
+		// Your Attribution API key that we'll use to initialize attibution.js.
 		'api_key'           => '',
 
 		// Whether or not we should ignore users of above a certain permissions
@@ -630,8 +630,8 @@ class Attribution_Analytics_WordPress {
 	public function admin_menu() {
 
 		add_options_page(
-			apply_filters( 'attribution_admin_menu_page_title', __( 'Analytics', 'attribution' ) ), // Page Title
-			apply_filters( 'attribution_admin_menu_menu_title', __( 'Analytics', 'attribution' ) ), // Menu Title
+			apply_filters( 'attribution_admin_menu_page_title', __( 'Attribution', 'attribution' ) ), // Page Title
+			apply_filters( 'attribution_admin_menu_menu_title', __( 'Attribution', 'attribution' ) ), // Menu Title
 			apply_filters( 'attribution_admin_settings_capability', 'manage_options' ),  // Capability Required
 			self::SLUG,                                                              // Menu Slug
 			array( $this, 'admin_page' )                                             // Function

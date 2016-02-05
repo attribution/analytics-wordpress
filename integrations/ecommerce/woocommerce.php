@@ -22,7 +22,6 @@ class Attribution_Commerce_Woo extends Attribution_Commerce {
 		$this->register_hook( 'attribution_get_current_page_track', 'completed_order'  , 1, $this );
 		$this->register_hook( 'attribution_get_current_page_track', 'added_to_cart'    , 2, $this );
 		$this->register_hook( 'attribution_get_current_page_track', 'removed_from_cart', 2, $this );
-
                 $this->register_hook( 'attribution_get_current_user_identify', 'identify_completed_order', 1, $this );
 
 		/* HTTP actions */
@@ -319,15 +318,6 @@ class Attribution_Commerce_Woo extends Attribution_Commerce {
 					)
 				);
 
-                                $identify = array(
-                                  'user_id' => $order->billing_email,
-                                  'traits' => array(
-                                        'email'     => $order->billing_email,
-					'firstName' => $order->billing_first_name,
-					'lastName'  => $order->billing_last_name
-                                      )
-                                )
-
 			}
 		}
 
@@ -347,7 +337,7 @@ class Attribution_Commerce_Woo extends Attribution_Commerce {
 	 */
 	public function identify_completed_order() {
 		$args  = func_get_args();
-		$track = $args[0];
+		$identify = $args[0];
 
 		if ( did_action( 'woocommerce_thankyou' ) ) {
 
@@ -364,11 +354,11 @@ class Attribution_Commerce_Woo extends Attribution_Commerce {
                                         'firstName' => $order->billing_first_name,
                                         'lastName'  => $order->billing_last_name
                                   )
-                              )
+                              );
 			}
 		}
 
-		return $track;
+		return $identify;
 	}
 
 }

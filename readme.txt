@@ -23,7 +23,7 @@ Get started with Analytics for WordPress today!
 == Installation ==
 
 1. Go to the **Plugins > Add New** page in your WordPress admin.
-1. Search for "Attribution" and install **Attribution for WordPress — by Attribution.io**.
+1. Search for "Attribution" and install **Attribution for WordPress**.
 1. Click **Activate Plugin**.
 1. Go to **Settings > Analytics** and enter your Attribution API key. (If you haven't signed up for Attribution yet, now's the time!)
 
