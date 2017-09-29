@@ -3,7 +3,7 @@
 Plugin Name: Attribution for Wordpress
 Plugin URI: https://attributionapp.com
 Description: Attribution for WordPress lets you easily track advertising spend, revenue and conversions across all of your marketing channels.
-Version: 1.0.2
+Version: 1.0.3
 License: GPLv2
 Author: Attribution
 Author URI: https://attributionapp.com
@@ -162,7 +162,7 @@ class Attribution_Analytics_WordPress {
 	/**
 	 * Current plugin version.
 	 */
-	const VERSION = '1.0.0';
+	const VERSION = '1.0.3';
 
 	/**
 	 * The singleton instance of Attribution_Analytics_WordPress.

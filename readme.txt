@@ -1,15 +1,15 @@
 === Attribution for WordPress ===
 Tags: analytics, attribution, attributionapp
 Requires at least: 3.6
-Tested up to: 4.0
-Stable tag: 1.0.2
+Tested up to: 4.8.2
+Stable tag: 1.0.3
+Requires PHP: 5.6, 7
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Plugin for
-[Attribution](http://attributionapp.com/?utm_source=wordpress&utm_medium=partners&utm_campaign=plugin_directory "Attribution")
+Plugin for [Attribution](http://attributionapp.com/?utm_source=wordpress&utm_medium=partners&utm_campaign=plugin_directory "Attribution")
 
 * Attribute marketing spend to revenue growth with precise calculations
 * Automatically pull in cost data from Google adwords and Facebook Ads
